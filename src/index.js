@@ -1,12 +1,12 @@
 import express from "express";
-import Renderer from './helpers/renderers'
+import renderer from './helpers/renderers'
 
 const app = express();
 
 app.use(express.static("public"));
 
-app.get('/', (req, res) => {
-    res.send(Renderer());
+app.get('*', (req, res) => {
+    res.send(renderer(req));
 })
 
 const PORT = 3000;
