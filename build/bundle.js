@@ -74,15 +74,9 @@ var _express = __webpack_require__(1);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _react = __webpack_require__(2);
+var _renderers = __webpack_require__(2);
 
-var _react2 = _interopRequireDefault(_react);
-
-var _server = __webpack_require__(3);
-
-var _home = __webpack_require__(4);
-
-var _home2 = _interopRequireDefault(_home);
+var _renderers2 = _interopRequireDefault(_renderers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -91,8 +85,7 @@ var app = (0, _express2.default)();
 app.use(_express2.default.static("public"));
 
 app.get('/', function (req, res) {
-    var content = (0, _server.renderToString)(_react2.default.createElement(_home2.default, null));
-    res.send(content);
+    res.send((0, _renderers2.default)());
 });
 
 var PORT = 3000;
@@ -108,18 +101,48 @@ module.exports = require("express");
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = require("react");
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _server = __webpack_require__(5);
+
+var _home = __webpack_require__(7);
+
+var _home2 = _interopRequireDefault(_home);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+    var content = (0, _server.renderToString)(_react2.default.createElement(_home2.default, null));
+    return '<html>\n        <head></head>\n        <body>\n            <div id="root" >' + content + '</div>\n            <script src="bundle.js" ></script>\n        </body>\n    </html>';
+};
 
 /***/ }),
 /* 3 */
 /***/ (function(module, exports) {
 
+module.exports = require("react");
+
+/***/ }),
+/* 4 */,
+/* 5 */
+/***/ (function(module, exports) {
+
 module.exports = require("react-dom/server");
 
 /***/ }),
-/* 4 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -131,7 +154,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(2);
+var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -146,13 +169,21 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Home = function (_Component) {
     _inherits(Home, _Component);
 
-    function Home() {
+    function Home(props) {
         _classCallCheck(this, Home);
 
-        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+
+        _this.handleClick = _this.handleClick.bind(_this);
+        return _this;
     }
 
     _createClass(Home, [{
+        key: "handleClick",
+        value: function handleClick() {
+            console.log("renderer");
+        }
+    }, {
         key: "render",
         value: function render() {
             return _react2.default.createElement(
@@ -161,14 +192,19 @@ var Home = function (_Component) {
                 _react2.default.createElement(
                     "div",
                     null,
-                    " hello 1233333 "
+                    " hello 123333344 "
+                ),
+                _react2.default.createElement(
+                    "button",
+                    { onClick: this.handleClick },
+                    " click me!"
                 ),
                 _react2.default.createElement(
                     "button",
                     { onClick: function onClick() {
                             return console.log("clicked button");
                         } },
-                    " Click Me!"
+                    " Click Me 22!"
                 )
             );
         }
