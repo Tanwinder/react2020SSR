@@ -11,7 +11,7 @@ class Home extends Component {
     render() {
         return(
             <div>
-                <div> hello 123333344 </div>
+                <div> hello Gurpreet! </div>
                 <button onClick={this.handleClick}> click me!</button>
                 <button onClick={() => console.log("clicked button")}> Click Me 22!</button>
             </div>
