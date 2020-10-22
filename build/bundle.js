@@ -60,21 +60,33 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+module.exports = require("react");
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-router-dom");
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _express = __webpack_require__(1);
+var _express = __webpack_require__(3);
 
 var _express2 = _interopRequireDefault(_express);
 
-var _renderers = __webpack_require__(2);
+var _renderers = __webpack_require__(4);
 
 var _renderers2 = _interopRequireDefault(_renderers);
 
@@ -84,8 +96,8 @@ var app = (0, _express2.default)();
 
 app.use(_express2.default.static("public"));
 
-app.get('/', function (req, res) {
-    res.send((0, _renderers2.default)());
+app.get('*', function (req, res) {
+    res.send((0, _renderers2.default)(req));
 });
 
 var PORT = 3000;
@@ -94,13 +106,13 @@ app.listen(PORT, function () {
 });
 
 /***/ }),
-/* 1 */
+/* 3 */
 /***/ (function(module, exports) {
 
 module.exports = require("express");
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -110,11 +122,51 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _react = __webpack_require__(3);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
 var _server = __webpack_require__(5);
+
+var _reactRouterDom = __webpack_require__(1);
+
+var _Routes = __webpack_require__(6);
+
+var _Routes2 = _interopRequireDefault(_Routes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (req) {
+    var content = (0, _server.renderToString)(_react2.default.createElement(
+        _reactRouterDom.StaticRouter,
+        { context: {}, location: req.path },
+        _react2.default.createElement(_Routes2.default, null)
+    ));
+    return '<html>\n        <head></head>\n        <body>\n            <div id="root" >' + content + '</div>\n            <script src="bundle.js" ></script>\n        </body>\n    </html>';
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("react-dom/server");
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(1);
 
 var _home = __webpack_require__(7);
 
@@ -123,25 +175,21 @@ var _home2 = _interopRequireDefault(_home);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function () {
-    var content = (0, _server.renderToString)(_react2.default.createElement(_home2.default, null));
-    return '<html>\n        <head></head>\n        <body>\n            <div id="root" >' + content + '</div>\n            <script src="bundle.js" ></script>\n        </body>\n    </html>';
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _home2.default }),
+        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/test', component: function component() {
+                return _react2.default.createElement(
+                    'div',
+                    null,
+                    'Test'
+                );
+            } })
+    );
 };
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-module.exports = require("react");
-
-/***/ }),
-/* 4 */,
-/* 5 */
-/***/ (function(module, exports) {
-
-module.exports = require("react-dom/server");
-
-/***/ }),
-/* 6 */,
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -154,7 +202,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(3);
+var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -192,7 +240,7 @@ var Home = function (_Component) {
                 _react2.default.createElement(
                     "div",
                     null,
-                    " hello 123333344 "
+                    " hello Gurpreet! "
                 ),
                 _react2.default.createElement(
                     "button",
