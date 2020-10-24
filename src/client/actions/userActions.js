@@ -8,6 +8,6 @@ export const fetchUsers = () => async dispatch => {
 
     dispatch({
         type: FETCH_USERS,
-        data: res
+        payload: res.data
     })
 }

@@ -1,12 +1,16 @@
+// import 'babel-polyfill';
 import express from "express";
 import renderer from './helpers/renderers'
+import createStore from './helpers/createStore'
 
 const app = express();
 
 app.use(express.static("public"));
 
 app.get('*', (req, res) => {
-    res.send(renderer(req));
+
+    const store = createStore();
+    res.send(renderer(req, store));
 })
 
 const PORT = 3000;

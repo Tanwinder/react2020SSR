@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter} from "react-router-dom";
@@ -6,9 +7,10 @@ import Thunk from "redux-thunk"
 import {Provider} from"react-redux";
 
 import Routes from './Routes';
-import Reducers from './reducers'
+import reducers from './reducers'
 
-const store = createStore(Reducers, {}, applyMiddleware(Thunk));
+
+const store = createStore(reducers, {}, applyMiddleware(Thunk));
 
 ReactDOM.hydrate(
     <Provider store={store} >
