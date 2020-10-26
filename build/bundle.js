@@ -349,11 +349,11 @@ var UsersList = function (_Component) {
     }, {
         key: 'displayUsersList',
         value: function displayUsersList() {
-            console.log("this.props.usersList", this.props.usersList);
+            console.log("this.props.usersList111");
             return this.props.usersList && this.props.usersList.map(function (item) {
                 return _react2.default.createElement(
                     'li',
-                    null,
+                    { key: item.id },
                     item.name
                 );
             });
@@ -364,11 +364,19 @@ var UsersList = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                'users list:-',
-                _react2.default.createElement(
-                    'ul',
+                this.props.usersList && this.props.usersList.length > 0 ? _react2.default.createElement(
+                    'div',
                     null,
-                    this.displayUsersList()
+                    'users list:-',
+                    _react2.default.createElement(
+                        'ul',
+                        null,
+                        this.displayUsersList()
+                    )
+                ) : _react2.default.createElement(
+                    'div',
+                    null,
+                    'Loading...'
                 )
             );
         }
@@ -528,11 +536,10 @@ exports.default = function () {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
     var action = arguments[1];
 
-    switch (action.types) {
+    switch (action.type) {
         case _types.FETCH_USERS:
-            console.log("state", state);
             return _extends({}, state, {
-                usersList: action.data
+                usersList: action.payload
             });
         default:
             return state;

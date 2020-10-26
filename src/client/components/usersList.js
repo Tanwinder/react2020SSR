@@ -12,16 +12,23 @@ class UsersList extends Component {
         this.props.fetchUsers();
     }
     displayUsersList() {
-        console.log("this.props.usersList", this.props.usersList)
+        console.log("this.props.usersList111", )
         return this.props.usersList && this.props.usersList.map( item => {
-            return(<li>{item.name}</li>)
+            return(<li key={item.id}>{item.name}</li>)
         })
     }
     render() {
         return (
             <div>
-                users list:-
-                <ul>{this.displayUsersList()}</ul>
+            {
+                this.props.usersList && this.props.usersList.length > 0 ?
+                <div>
+                    users list:-
+                    <ul>{this.displayUsersList()}</ul>
+                </div>
+                :
+                <div>Loading...</div>
+            }
             </div>
         )
     }

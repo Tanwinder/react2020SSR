@@ -5,12 +5,11 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-    switch(action.types) {
+    switch(action.type) {
         case FETCH_USERS:
-            console.log("state", state);
             return {
                 ...state,
-                usersList: action.data
+                usersList: action.payload
             };
         default:
             return state;
