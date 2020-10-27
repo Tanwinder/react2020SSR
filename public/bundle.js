@@ -38261,7 +38261,7 @@ var UsersList = function (_Component) {
                 this.props.usersList && this.props.usersList.length > 0 ? _react2.default.createElement(
                     'div',
                     null,
-                    'users list:-',
+                    'Users List:-',
                     _react2.default.createElement(
                         'ul',
                         null,

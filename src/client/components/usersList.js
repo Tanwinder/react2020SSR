@@ -23,7 +23,7 @@ class UsersList extends Component {
             {
                 this.props.usersList && this.props.usersList.length > 0 ?
                 <div>
-                    users list:-
+                    Users List:-
                     <ul>{this.displayUsersList()}</ul>
                 </div>
                 :
