@@ -40,6 +40,11 @@ const mapStateToProps = state => ({
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({ fetchUsers }, dispatch)
-  }
+}
 
+function loadData() {
+    console.log("I ma trying to load some data");
+}
+
+export {loadData};
 export default connect(mapStateToProps, mapDispatchToProps)(UsersList);

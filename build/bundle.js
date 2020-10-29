@@ -114,9 +114,15 @@ var _renderers = __webpack_require__(7);
 
 var _renderers2 = _interopRequireDefault(_renderers);
 
-var _createStore = __webpack_require__(14);
+var _createStore = __webpack_require__(15);
 
 var _createStore2 = _interopRequireDefault(_createStore);
+
+var _reactRouterConfig = __webpack_require__(14);
+
+var _Routes = __webpack_require__(9);
+
+var _Routes2 = _interopRequireDefault(_Routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -126,8 +132,14 @@ var app = (0, _express2.default)(); // import 'babel-polyfill';
 app.use(_express2.default.static("public"));
 
 app.get('*', function (req, res) {
-
     var store = (0, _createStore2.default)();
+
+    (0, _reactRouterConfig.matchRoutes)(_Routes2.default, req.path).map(function (_ref) {
+        var route = _ref.route;
+
+        return route.loadData ? route.loadData() : null;
+    });
+
     res.send((0, _renderers2.default)(req, store));
 });
 
@@ -167,6 +179,8 @@ var _Routes = __webpack_require__(9);
 
 var _Routes2 = _interopRequireDefault(_Routes);
 
+var _reactRouterConfig = __webpack_require__(14);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = function (req, store) {
@@ -176,7 +190,11 @@ exports.default = function (req, store) {
         _react2.default.createElement(
             _reactRouterDom.StaticRouter,
             { context: {}, location: req.path },
-            _react2.default.createElement(_Routes2.default, null)
+            _react2.default.createElement(
+                'div',
+                null,
+                (0, _reactRouterConfig.renderRoutes)(_Routes2.default)
+            )
         )
     ));
     return '<html>\n        <head></head>\n        <body>\n            <div id="root" >' + content + '</div>\n            <script src="bundle.js" ></script>\n        </body>\n    </html>';
@@ -215,14 +233,24 @@ var _usersList2 = _interopRequireDefault(_usersList);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _home2.default }),
-        _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/users', component: _usersList2.default })
-    );
-};
+// export default () => {
+//     return (
+//         <div>
+//             <Route exact path="/" component={Home} />
+//             <Route exact path="/users" component={UsersList} />
+//         </div>
+//     )
+// }
+
+exports.default = [{
+    path: '/',
+    component: _home2.default,
+    exact: true
+}, {
+    loadData: _usersList.loadData,
+    path: '/users',
+    component: _usersList2.default
+}];
 
 /***/ }),
 /* 10 */
@@ -308,6 +336,7 @@ exports.default = Home;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.loadData = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -395,6 +424,11 @@ function mapDispatchToProps(dispatch) {
     return (0, _redux.bindActionCreators)({ fetchUsers: _userActions.fetchUsers }, dispatch);
 }
 
+function loadData() {
+    console.log("I ma trying to load some data");
+}
+
+exports.loadData = loadData;
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(UsersList);
 
 /***/ }),
@@ -463,32 +497,9 @@ module.exports = require("axios");
 
 /***/ }),
 /* 14 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _redux = __webpack_require__(1);
-
-var _index = __webpack_require__(15);
-
-var _index2 = _interopRequireDefault(_index);
-
-var _reduxThunk = __webpack_require__(17);
-
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-    var store = (0, _redux.createStore)(_index2.default, {}, (0, _redux.applyMiddleware)(_reduxThunk2.default));
-
-    return store;
-};
+module.exports = require("react-router-config");
 
 /***/ }),
 /* 15 */
@@ -503,7 +514,36 @@ Object.defineProperty(exports, "__esModule", {
 
 var _redux = __webpack_require__(1);
 
-var _userReducer = __webpack_require__(16);
+var _index = __webpack_require__(16);
+
+var _index2 = _interopRequireDefault(_index);
+
+var _reduxThunk = __webpack_require__(18);
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+    var store = (0, _redux.createStore)(_index2.default, {}, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+
+    return store;
+};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _redux = __webpack_require__(1);
+
+var _userReducer = __webpack_require__(17);
 
 var _userReducer2 = _interopRequireDefault(_userReducer);
 
@@ -514,7 +554,7 @@ exports.default = (0, _redux.combineReducers)({
 });
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -547,7 +587,7 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports) {
 
 module.exports = require("redux-thunk");
