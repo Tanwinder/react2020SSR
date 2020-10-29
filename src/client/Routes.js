@@ -1,7 +1,7 @@
 import React from 'react'
 import {Route} from 'react-router-dom'
-import Home from "./components/home";
-import UsersList, {loadData} from './components/usersList';
+import HomePage from "./page/homePage";
+import UsersListPage from './page/usersListPage';
 
 // export default () => {
 //     return (
@@ -14,13 +14,12 @@ import UsersList, {loadData} from './components/usersList';
 
 export default [
     {
+        ...HomePage,
         path: '/',
-        component: Home,
         exact: true
     },
     {
-        loadData,
-        path: '/users',
-        component: UsersList
+        ...UsersListPage,
+        path: '/users'
     }
 ];

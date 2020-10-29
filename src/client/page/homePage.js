@@ -1,6 +1,7 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
 
-class Home extends Component {
+class HomePage extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
@@ -19,4 +20,6 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default {
+    component: HomePage
+};

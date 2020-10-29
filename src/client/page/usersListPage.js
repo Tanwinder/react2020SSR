@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { fetchUsers } from '../actions/userActions';
 
-class UsersList extends Component {
+class UsersListPage extends Component {
     constructor(props) {
         super(props);
         this.displayUsersList= this.displayUsersList.bind(this);
@@ -42,9 +42,12 @@ function mapDispatchToProps(dispatch) {
     return bindActionCreators({ fetchUsers }, dispatch)
 }
 
-function loadData() {
-    console.log("I ma trying to load some data");
+function loadData(store) {
+    return store.dispatch(fetchUsers());
+    // console.log("I ma trying to load some data");
 }
 
-export {loadData};
-export default connect(mapStateToProps, mapDispatchToProps)(UsersList);
+export default {
+    loadData,
+    component: connect(mapStateToProps, mapDispatchToProps)(UsersListPage)
+};
