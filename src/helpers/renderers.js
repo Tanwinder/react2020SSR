@@ -6,7 +6,6 @@ import Routes from "../client/Routes";
 import {renderRoutes} from 'react-router-config'
 import serialize from 'serialize-javascript';
 
-
 export default (req, store) => {
     let content = renderToString(
         <Provider store={store}>

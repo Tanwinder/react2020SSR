@@ -2,6 +2,7 @@ import React from 'react'
 import {Route} from 'react-router-dom'
 import HomePage from "./page/homePage";
 import UsersListPage from './page/usersListPage';
+import App from './App';
 
 // export default () => {
 //     return (
@@ -14,12 +15,29 @@ import UsersListPage from './page/usersListPage';
 
 export default [
     {
-        ...HomePage,
-        path: '/',
-        exact: true
-    },
-    {
-        ...UsersListPage,
-        path: '/users'
+        ...App,
+        routes: [
+            {
+                ...HomePage,
+                path: '/',
+                exact: true
+            },
+            {
+                ...UsersListPage,
+                path: '/users'
+            }
+        ]
     }
-];
+]
+
+// export default [
+//     {
+//         ...HomePage,
+//         path: '/',
+//         exact: true
+//     },
+//     {
+//         ...UsersListPage,
+//         path: '/users'
+//     }
+// ];
