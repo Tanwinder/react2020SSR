@@ -7,7 +7,6 @@ class HomePage extends Component {
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick() {
-        console.log("renderer");
     }
     render() {
         return(

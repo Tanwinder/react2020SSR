@@ -7,11 +7,12 @@ import proxy from 'express-http-proxy';
 import Routes from './client/Routes'
 
 const app = express();
+let counter = 1000;
 
 app.use(express.static("public"));
 app.use('/api', proxy("http://react-ssr-api.herokuapp.com", {
     proxyReqOptDecorator(proxyReqOpts) {
-        // console.log("proxyReqOpts------", proxyReqOpts)
+        console.log(`proxyReqOpts${counter++}------`, proxyReqOpts)
         proxyReqOpts.headers['x-forwarded-host'] = 'localhost:3000';
         return proxyReqOpts;
     }
@@ -25,8 +26,15 @@ app.get('*', (req, res) => {
     })
 
     Promise.all(promises).then((val) => {
-        // console.log("val----", val);
-        res.send(renderer(req, store));
+        const context = {};
+        const content = renderer(req, store, context);
+        console.log('content-----', context)
+        if(context.notFound) {
+            res.status(404);
+        }
+        res.send(content);
+    }).catch(err => {
+        console.log("error-----", err)
     });
 })
 

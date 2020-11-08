@@ -7,7 +7,9 @@ const App = ({route}) => {
     return(
         <div>
             <Header />
+            <div className="container">
             {renderRoutes(route.routes)}
+            </div>
         </div>
     )
 }

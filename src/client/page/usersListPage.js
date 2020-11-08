@@ -12,9 +12,8 @@ class UsersListPage extends Component {
         this.props.fetchUsers();
     }
     displayUsersList() {
-        console.log("this.props.usersList111", )
         return this.props.usersList && this.props.usersList.map( item => {
-            return(<li key={item.id}>{item.name}</li>)
+            return(<li className="collection-item" key={item.id}>{item.name}</li>)
         })
     }
     render() {
@@ -23,8 +22,8 @@ class UsersListPage extends Component {
             {
                 this.props.usersList && this.props.usersList.length > 0 ?
                 <div>
-                    Users List:-
-                    <ul>{this.displayUsersList()}</ul>
+                    <h1>Users List:-</h1>
+                    <ul className="collection">{this.displayUsersList()}</ul>
                 </div>
                 :
                 <div>Loading...</div>
@@ -44,7 +43,6 @@ function mapDispatchToProps(dispatch) {
 
 function loadData(store) {
     return store.dispatch(fetchUsers());
-    // console.log("I ma trying to load some data");
 }
 
 export default {
