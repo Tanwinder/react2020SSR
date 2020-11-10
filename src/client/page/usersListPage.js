@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
+import { Helmet } from 'react-helmet';
 import { fetchUsers } from '../actions/userActions';
 
 class UsersListPage extends Component {
@@ -16,9 +17,18 @@ class UsersListPage extends Component {
             return(<li className="collection-item" key={item.id}>{item.name}</li>)
         })
     }
+    addhelmetTags() {
+        return(
+            <Helmet>
+                <title>{`${this.props.usersList.length || 0} Users`}</title>
+                <meta property="og:title" content="User App" />
+            </Helmet>
+        )
+    }
     render() {
         return (
             <div>
+                {this.addhelmetTags()}
             {
                 this.props.usersList && this.props.usersList.length > 0 ?
                 <div>
