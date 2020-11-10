@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { fetchAdmins } from '../actions/userActions';
 import { connect } from 'react-redux';
+import AuthCheck from '../components/hocs/authCheck';
 
 class AdminPage extends Component {
     constructor(props) {
@@ -41,5 +42,5 @@ const loadData = (store) => {
 
 export default {
     loadData,
-    component: connect(mapStateToProps, {fetchAdmins})(AdminPage)
+    component: connect(mapStateToProps, {fetchAdmins})(AuthCheck(AdminPage))
 }
