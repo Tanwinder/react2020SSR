@@ -19,7 +19,7 @@ const config = {
         path: path.resolve(__dirname, 'build')
     },
 
-    externals: [webpackNodeExternals()]
+    externals: [webpackNodeExternals()] // in order to ignore all modules in node_modules folder
 };
 
 module.exports = merge(baseConfig, config);
